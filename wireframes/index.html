@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wireframes — Photo Client Portal</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Courier New', monospace;
+      background: #f0f0f0;
+      color: #333;
+    }
+
+    .screen {
+      display: none;
+      max-width: 1100px;
+      margin: 20px auto;
+      background: #fff;
+      border: 2px solid #999;
+      box-shadow: 4px 4px 0 #ccc;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      border-bottom: 2px solid #999;
+      background: #fafafa;
+    }
+
+    .topbar .logo {
+      font-weight: bold;
+      font-size: 18px;
+      background: #ddd;
+      padding: 4px 12px;
+    }
+
+    .topbar nav a {
+      margin-left: 16px;
+      color: #333;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .topbar nav a:hover {
+      background: #ff0;
+    }
+
+    .content {
+      padding: 24px;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      font-size: 16px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #666;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 4px;
+    }
+
+    .hero {
+      border: 2px dashed #aaa;
+      padding: 60px 24px;
+      text-align: center;
+      margin-bottom: 24px;
+      background: #fafafa;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .hero p {
+      color: #666;
+      margin-bottom: 16px;
+    }
+
+    .btn {
+      display: inline-block;
+      border: 2px solid #333;
+      padding: 8px 20px;
+      cursor: pointer;
+      background: #fff;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+    }
+
+    .btn:hover {
+      background: #333;
+      color: #fff;
+    }
+
+    .btn-primary {
+      background: #333;
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #555;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .grid-6 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .card {
+      border: 2px solid #ccc;
+      padding: 16px;
+      background: #fafafa;
+    }
+
+    .card .img-placeholder {
+      background: #ddd;
+      height: 80px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #999;
+      font-size: 12px;
+    }
+
+    .footer {
+      border-top: 2px solid #ddd;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      color: #999;
+      font-size: 12px;
+      margin-top: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 2px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 6px 8px;
+      border: 2px solid #ccc;
+      font-family: 'Courier New', monospace;
+      background: #fafafa;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+    }
+
+    .code-inputs {
+      display: flex;
+      gap: 8px;
+      margin: 16px 0;
+    }
+
+    .code-inputs input {
+      width: 48px;
+      height: 56px;
+      text-align: center;
+      font-size: 24px;
+      border: 2px solid #ccc;
+      font-family: 'Courier New', monospace;
+    }
+
+    .sidebar {
+      display: flex;
+      min-height: 400px;
+    }
+
+    .sidebar-nav {
+      width: 200px;
+      border-right: 2px solid #ddd;
+      padding: 12px;
+      background: #fafafa;
+    }
+
+    .sidebar-nav a {
+      display: block;
+      padding: 6px 8px;
+      cursor: pointer;
+      margin-bottom: 4px;
+      font-size: 13px;
+    }
+
+    .sidebar-nav a:hover {
+      background: #ddd;
+    }
+
+    .sidebar-nav a.active {
+      background: #333;
+      color: #fff;
+    }
+
+    .sidebar-content {
+      flex: 1;
+      padding: 16px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .stat-card {
+      border: 2px solid #ccc;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .stat-card .num {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .stat-card .label {
+      font-size: 11px;
+      color: #666;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 12px 0;
+    }
+
+    .gallery-grid .photo {
+      border: 2px solid #ccc;
+      aspect-ratio: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #f5f5f5;
+      font-size: 11px;
+      color: #999;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .gallery-grid .photo .badge {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      font-size: 10px;
+      padding: 2px 6px;
+      border: 1px solid #999;
+      background: #fff;
+    }
+
+    .gallery-grid .photo .badge.auth {
+      border-color: #080;
+      color: #080;
+    }
+
+    .gallery-grid .photo:hover {
+      border-color: #666;
+    }
+
+    .gallery-item {
+      border: 2px solid #ccc;
+      padding: 12px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .gallery-item .thumb {
+      width: 60px;
+      height: 60px;
+      background: #ddd;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: #999;
+    }
+
+    .gallery-item .info {
+      flex: 1;
+    }
+
+    .gallery-item .info .title {
+      font-weight: bold;
+    }
+
+    .gallery-item .info .meta {
+      font-size: 12px;
+      color: #666;
+    }
+
+    .upload-zone {
+      border: 2px dashed #aaa;
+      padding: 40px;
+      text-align: center;
+      margin-bottom: 16px;
+      background: #fafafa;
+    }
+
+    .upload-item {
+      border: 2px solid #eee;
+      padding: 8px 12px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+    }
+
+    .upload-item .progress {
+      flex: 1;
+      height: 14px;
+      background: #eee;
+      position: relative;
+    }
+
+    .upload-item .progress .bar {
+      height: 100%;
+      background: #666;
+    }
+
+    .upload-item .progress .pct {
+      position: absolute;
+      right: 4px;
+      top: 0;
+      font-size: 10px;
+      line-height: 14px;
+    }
+
+    .log-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .log-table th,
+    .log-table td {
+      border: 1px solid #ccc;
+      padding: 4px 8px;
+      text-align: left;
+    }
+
+    .log-table th {
+      background: #f0f0f0;
+    }
+
+    .quote-item {
+      border: 2px solid #ccc;
+      padding: 12px;
+      margin-bottom: 8px;
+    }
+
+    .quote-item .status {
+      font-size: 10px;
+      padding: 2px 6px;
+      border: 1px solid;
+      display: inline-block;
+      margin-bottom: 4px;
+    }
+
+    .quote-item .status.new {
+      border-color: #f60;
+      color: #f60;
+    }
+
+    .quote-item .status.read {
+      border-color: #080;
+      color: #080;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 10px;
+      padding: 2px 6px;
+      border: 1px solid #999;
+      margin-left: 6px;
+    }
+
+    .perm-toggle {
+      font-size: 11px;
+      margin-bottom: 8px;
+    }
+
+    .perm-toggle select {
+      font-size: 11px;
+      padding: 2px 4px;
+      border: 1px solid #ccc;
+      font-family: 'Courier New', monospace;
+    }
+
+    .mobile-warning {
+      background: #fff3cd;
+      border: 2px solid #ffc107;
+      padding: 8px 12px;
+      font-size: 12px;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    @media (max-width: 700px) {
+      .grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .grid-6 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .sidebar {
+        flex-direction: column;
+      }
+
+      .sidebar-nav {
+        width: 100%;
+        border-right: none;
+        border-bottom: 2px solid #ddd;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ==================== SCREEN 1: LANDING ==================== -->
+  <div class="screen active" id="screen-landing">
+    <div class="topbar">
+      <div class="logo">[PHOTO CO.]</div>
+      <nav>
+        <a onclick="go('screen-landing')">Services</a>
+        <a onclick="go('screen-landing')">Portfolio</a>
+        <a onclick="go('screen-landing')">About</a>
+        <a onclick="go('screen-landing')">Contact</a>
+        <a onclick="go('screen-quote')">[Quote]</a>
+        <a onclick="go('screen-client-login')">Client Login</a>
+      </nav>
+    </div>
+    <div class="content">
+      <div class="hero">
+        <h1>Professional Photography for Your Business</h1>
+        <p>Weddings · Restaurants · Events · Commercial · Product</p>
+        <span class="btn btn-primary" onclick="go('screen-quote')">Request a Quote →</span>
+      </div>
+      <h2>Services</h2>
+      <div class="grid-4">
+        <div class="card">
+          <div class="img-placeholder">[Wedding]</div>
+          <div>Wedding Photography</div>
+        </div>
+        <div class="card">
+          <div class="img-placeholder">[Events]</div>
+          <div>Event Photography</div>
+        </div>
+        <div class="card">
+          <div class="img-placeholder">[Rest.]</div>
+          <div>Restaurant & Cafe</div>
+        </div>
+        <div class="card">
+          <div class="img-placeholder">[Product]</div>
+          <div>Product Photography</div>
+        </div>
+      </div>
+      <h2>Portfolio</h2>
+      <div class="grid-6">
+        <div class="card">
+          <div class="img-placeholder">[Photo]</div>
+        </div>
+        <div class="card">
+          <div class="img-placeholder">[Photo]</div>
+        </div>
+        <div class="card">
+          <div class="img-placeholder">[Photo]</div>
+        </div>
+        <div class="card">
+          <div class="img-placeholder">[Photo]</div>
+        </div>
+        <div class="card">
+          <div class="img-placeholder">[Photo]</div>
+        </div>
+        <div class="card">
+          <div class="img-placeholder">[Photo]</div>
+        </div>
+      </div>
+      <div class="footer"><span>[PHOTO CO.]</span><span>© 2026</span></div>
+    </div>
+  </div>
+
+  <!-- ==================== SCREEN 2: QUOTE REQUEST ==================== -->
+  <div class="screen" id="screen-quote">
+    <div class="topbar">
+      <div class="logo">[PHOTO CO.]</div>
+      <nav><a onclick="go('screen-landing')">← Back to Home</a></nav>
+    </div>
+    <div class="content" style="max-width:600px;margin:0 auto;">
+      <h1>Request a Quote</h1>
+      <div class="form-group"><label>Name</label><input type="text" placeholder="Your name" value="______"></div>
+      <div class="form-group"><label>Email</label><input type="text" placeholder="your@email.com" value="______"></div>
+      <div class="form-group"><label>Phone</label><input type="text" placeholder="+1 555-0000" value="______"></div>
+      <div class="form-group"><label>Business Type</label><select>
+          <option>Wedding</option>
+          <option>Restaurant</option>
+          <option>Event</option>
+          <option>Commercial</option>
+          <option>Product</option>
+        </select></div>
+      <div class="form-group"><label>Session Type</label><select>
+          <option>Photoshoot</option>
+          <option>Video</option>
+          <option>Both</option>
+        </select></div>
+      <div class="form-group"><label>Event Date</label><input type="text" placeholder="YYYY-MM-DD" value="______"></div>
+      <div class="form-group"><label>Location</label><input type="text" placeholder="City, State" value="______"></div>
+      <div class="form-group"><label>Duration</label><select>
+          <option>1 hour</option>
+          <option>2 hours</option>
+          <option>4 hours</option>
+          <option>Full day</option>
+        </select></div>
+      <div class="form-group"><label>Est. Budget</label><select>
+          <option>&lt;$500</option>
+          <option>$500 – $1,000</option>
+          <option>$1,000 – $2,000</option>
+          <option>&gt;$2,000</option>
+        </select></div>
+      <div class="form-group"><label>Notes</label><textarea rows="3" placeholder="Tell us about your project..."
+          style="width:100%"></textarea></div>
+      <div style="margin-top:16px;">
+        <span class="btn btn-primary" onclick="alert('Quote submitted (demo)')">Submit Request</span>
+      </div>
+      <div class="footer" style="margin-top:24px;"><span>← <a onclick="go('screen-landing')"
+            style="cursor:pointer;text-decoration:underline;">Back to Home</a></span></div>
+    </div>
+  </div>
+
+  <!-- ==================== SCREEN 3: CLIENT ACTIVATION ==================== -->
+  <div class="screen" id="screen-activation">
+    <div class="topbar">
+      <div class="logo">[PHOTO CO.]</div>
+      <nav><a onclick="go('screen-landing')">Home</a></nav>
+    </div>
+    <div class="content" style="max-width:480px;margin:0 auto;">
+      <h1>Activate Your Account</h1>
+      <p style="margin-bottom:16px;font-size:14px;color:#666;">Enter the 6-digit code sent to your email.</p>
+      <div class="code-inputs">
+        <input type="text" maxlength="1" value="3">
+        <input type="text" maxlength="1" value="8">
+        <input type="text" maxlength="1" value="1">
+        <input type="text" maxlength="1" value="5">
+        <input type="text" maxlength="1" value="9">
+        <input type="text" maxlength="1" value="2">
+      </div>
+      <div style="margin-bottom:24px;">
+        <span class="btn btn-primary" onclick="alert('Code validated (demo)')">Activate</span>
+      </div>
+      <hr style="border:1px solid #ddd;margin:16px 0;">
+      <p style="font-size:13px;margin-bottom:12px;">Create your credentials:</p>
+      <div class="form-group"><label>Email</label><input type="text" placeholder="your@email.com"></div>
+      <div class="form-group"><label>Password</label><input type="password" placeholder="********"></div>
+      <div class="form-group"><label>Name</label><input type="text" placeholder="Your name"></div>
+      <div style="margin-top:12px;">
+        <span class="btn btn-primary" onclick="go('screen-client-dashboard')">Complete Registration</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SCREEN 4: CLIENT LOGIN ==================== -->
+  <div class="screen" id="screen-client-login">
+    <div class="topbar">
+      <div class="logo">[PHOTO CO.]</div>
+      <nav><a onclick="go('screen-landing')">Home</a></nav>
+    </div>
+    <div class="content" style="max-width:400px;margin:0 auto;">
+      <h1>Client Login</h1>
+      <div class="form-group"><label>Email</label><input type="text" placeholder="your@email.com"></div>
+      <div class="form-group"><label>Password</label><input type="password" placeholder="********"></div>
+      <div style="margin:16px 0;">
+        <span class="btn btn-primary" onclick="go('screen-client-dashboard')">Sign In</span>
+      </div>
+      <p style="font-size:13px;color:#666;">Don't have an account? <a onclick="go('screen-activation')"
+          style="cursor:pointer;text-decoration:underline;">Activate with Code →</a></p>
+    </div>
+  </div>
+
+  <!-- ==================== SCREEN 5: CLIENT DASHBOARD ==================== -->
+  <div class="screen" id="screen-client-dashboard">
+    <div class="topbar">
+      <div class="logo">[PHOTO CO.]</div>
+      <nav><a onclick="go('screen-client-profile')">[Profile]</a><a onclick="go('screen-landing')">[Logout]</a></nav>
+    </div>
+    <div class="content">
+      <h1>My Galleries</h1>
+      <div class="gallery-item" onclick="go('screen-client-gallery')" style="cursor:pointer;">
+        <div class="thumb">[img]</div>
+        <div class="info">
+          <div class="title">Wedding — John & Maria</div>
+          <div class="meta">24 photos · Updated 2 days ago</div>
+        </div>
+        <span class="btn">View Gallery →</span>
+      </div>
+      <div class="gallery-item" onclick="go('screen-client-gallery')" style="cursor:pointer;">
+        <div class="thumb">[img]</div>
+        <div class="info">
+          <div class="title">Event — La Bodega</div>
+          <div class="meta">15 photos · Updated 1 week ago</div>
+        </div>
+        <span class="btn">View Gallery →</span>
+      </div>
+      <div class="gallery-item" onclick="go('screen-client-gallery')" style="cursor:pointer;">
+        <div class="thumb">[img]</div>
+        <div class="info">
+          <div class="title">Product — Menu Photos</div>
+          <div class="meta">8 photos · Updated 3 weeks ago</div>
+        </div>
+        <span class="btn">View Gallery →</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SCREEN 6: CLIENT GALLERY DETAIL ==================== -->
+  <div class="screen" id="screen-client-gallery">
+    <div class="topbar">
+      <div class="logo">[PHOTO CO.]</div>
+      <nav><a onclick="go('screen-client-dashboard')">← Back</a><a onclick="go('screen-client-profile')">[Profile]</a><a
+          onclick="go('screen-landing')">[Logout]</a></nav>
+    </div>
+    <div class="content">
+      <h1>Wedding — John & Maria <span style="font-size:14px;font-weight:normal;color:#666;">24 photos</span></h1>
+      <p style="font-size:13px;color:#666;margin-bottom:12px;">Preview all photos. Download only authorized ones <span
+          class="tag">✓ = authorized</span></p>
+      <div class="gallery-grid">
+        <div class="photo"><span>[preview]</span><span style="font-size:10px;">watermarked</span></div>
+        <div class="photo"><span>[preview]</span><span style="font-size:10px;">watermarked</span></div>
+        <div class="photo"><span>[preview]</span><span style="font-size:10px;">watermarked</span></div>
+        <div class="photo"><span>[preview]</span><span style="font-size:10px;">watermarked</span></div>
+        <div class="photo"><span>[preview]</span><span style="font-size:10px;">watermarked</span></div>
+        <div class="photo"><span>[preview]</span><span style="font-size:10px;">watermarked</span></div>
+        <div class="photo">
+          <div class="badge auth">✓ DL</div><span>[preview]</span><span style="font-size:10px;">watermarked</span>
+        </div>
+        <div class="photo">
+          <div class="badge auth">✓ DL</div><span>[preview]</span><span style="font-size:10px;">watermarked</span>
+        </div>
+        <div class="photo"><span>[preview]</span><span style="font-size:10px;">watermarked</span></div>
+        <div class="photo">
+          <div class="badge auth">✓ DL</div><span>[preview]</span><span style="font-size:10px;">watermarked</span>
+        </div>
+        <div class="photo"><span>[preview]</span><span style="font-size:10px;">watermarked</span></div>
+        <div class="photo">
+          <div class="badge auth">✓ DL</div><span>[preview]</span><span style="font-size:10px;">watermarked</span>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px;">
+        <span style="font-size:13px;">Pages: ‹ 1 2 3 ›</span>
+        <span style="font-size:13px;">Download authorized: <strong>5 of 24</strong> photos</span>
+      </div>
+      <div style="margin-top:12px;padding:8px;border:1px solid #ddd;font-size:12px;color:#666;">
+        Tip: Photos with ✓ can be downloaded. Click a photo to download.
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SCREEN 7: CLIENT PROFILE ==================== -->
+  <div class="screen" id="screen-client-profile">
+    <div class="topbar">
+      <div class="logo">[PHOTO CO.]</div>
+      <nav><a onclick="go('screen-client-dashboard')">← My Galleries</a><a onclick="go('screen-landing')">[Logout]</a>
+      </nav>
+    </div>
+    <div class="content" style="max-width:480px;margin:0 auto;">
+      <h1>Edit Profile</h1>
+      <div class="form-group"><label>Name</label><input type="text" value="John Doe"></div>
+      <div class="form-group"><label>Email</label><input type="text" value="john@email.com" style="background:#eee;"
+          readonly></div>
+      <div class="form-group"><label>Phone</label><input type="text" value="+1 555-0123"></div>
+      <div style="margin-top:16px;">
+        <span class="btn btn-primary" onclick="alert('Profile updated (demo)')">Save Changes</span>
+      </div>
+      <p style="font-size:12px;color:#999;margin-top:12px;">Password cannot be changed. Contact the photographer for
+        account issues.</p>
+    </div>
+  </div>
+
+  <!-- ==================== SCREEN 8: ADMIN DASHBOARD ==================== -->
+  <div class="screen" id="screen-admin-dashboard">
+    <div class="topbar">
+      <div class="logo">[ADMIN] PHOTO CO.</div>
+      <nav><a onclick="go('screen-landing')">[Logout]</a></nav>
+    </div>
+    <div class="sidebar">
+      <div class="sidebar-nav">
+        <a class="active" onclick="go('screen-admin-dashboard')">Dashboard</a>
+        <a onclick="go('screen-admin-clients')">Clients</a>
+        <a onclick="go('screen-admin-galleries')">Galleries</a>
+        <a onclick="go('screen-admin-quotes')">Quotes</a>
+        <a onclick="go('screen-admin-logs')">Download Logs</a>
+      </div>
+      <div class="sidebar-content">
+        <h1>Dashboard</h1>
+        <div class="stats">
+          <div class="stat-card">
+            <div class="num">12</div>
+            <div class="label">Clients</div>
+          </div>
+          <div class="stat-card">
+            <div class="num">8</div>
+            <div class="label">Galleries</div>
+          </div>
+          <div class="stat-card">
+            <div class="num">156</div>
+            <div class="label">Downloads</div>
+          </div>
+        </div>
+        <h2>Recent Activity</h2>
+        <ul style="font-size:13px;line-height:2;list-style:none;">
+          <li>• Maria G. downloaded 5 photos from <strong>Wedding — John & Maria</strong></li>
+          <li>• John S. activated account</li>
+          <li>• New quote request from <strong>Cafe Central</strong></li>
+          <li>• Uploaded 24 photos to <strong>Event — La Bodega</strong></li>
+        </ul>
+        <h2 style="margin-top:20px;">Pending Quotes</h2>
+        <div class="quote-item" onclick="go('screen-admin-quotes')" style="cursor:pointer;">
+          <div class="status new">NEW</div>
+          <strong>Cafe Central</strong> · Event photos · 2 days ago<br>
+          Budget: $500-$1k
+        </div>
+        <div class="quote-item" onclick="go('screen-admin-quotes')" style="cursor:pointer;">
+          <div class="status new">NEW</div>
+          <strong>Blue Bottle Coffee</strong> · Interior photos · 5 days ago<br>
+          Budget: $1k-$2k
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SCREEN 9: ADMIN — CLIENT LIST ==================== -->
+  <div class="screen" id="screen-admin-clients">
+    <div class="topbar">
+      <div class="logo">[ADMIN] PHOTO CO.</div>
+      <nav><a onclick="go('screen-landing')">[Logout]</a></nav>
+    </div>
+    <div class="sidebar">
+      <div class="sidebar-nav">
+        <a onclick="go('screen-admin-dashboard')">Dashboard</a>
+        <a class="active" onclick="go('screen-admin-clients')">Clients</a>
+        <a onclick="go('screen-admin-galleries')">Galleries</a>
+        <a onclick="go('screen-admin-quotes')">Quotes</a>
+        <a onclick="go('screen-admin-logs')">Download Logs</a>
+      </div>
+      <div class="sidebar-content">
+        <h1>Clients</h1>
+        <div class="gallery-item" onclick="go('screen-admin-client-detail')" style="cursor:pointer;">
+          <div class="thumb">[JD]</div>
+          <div class="info">
+            <div class="title">John Doe</div>
+            <div class="meta">john@email.com · Access: Active</div>
+          </div>
+          <span style="font-size:11px;color:#080;">●</span>
+        </div>
+        <div class="gallery-item" style="cursor:pointer;">
+          <div class="thumb">[MG]</div>
+          <div class="info">
+            <div class="title">Maria Garcia</div>
+            <div class="meta">maria@email.com · Access: Active</div>
+          </div>
+          <span style="font-size:11px;color:#080;">●</span>
+        </div>
+        <div class="gallery-item" style="cursor:pointer;">
+          <div class="thumb">[JS]</div>
+          <div class="info">
+            <div class="title">John Smith</div>
+            <div class="meta">jsmith@email.com · Access: Inactive</div>
+          </div>
+          <span style="font-size:11px;color:#800;">●</span>
+        </div>
+        <div style="margin-top:16px;"><span class="btn btn-primary" onclick="alert('Create client form (demo)')">+ New
+            Client</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SCREEN 10: ADMIN — CLIENT DETAIL ==================== -->
+  <div class="screen" id="screen-admin-client-detail">
+    <div class="topbar">
+      <div class="logo">[ADMIN] PHOTO CO.</div>
+      <nav><a onclick="go('screen-landing')">[Logout]</a></nav>
+    </div>
+    <div class="sidebar">
+      <div class="sidebar-nav">
+        <a onclick="go('screen-admin-dashboard')">Dashboard</a>
+        <a class="active" onclick="go('screen-admin-clients')">← Clients</a>
+        <a onclick="go('screen-admin-galleries')">Galleries</a>
+        <a onclick="go('screen-admin-quotes')">Quotes</a>
+        <a onclick="go('screen-admin-logs')">Download Logs</a>
+      </div>
+      <div class="sidebar-content">
+        <h1>John Doe <span style="font-size:14px;font-weight:normal;color:#666;">john@email.com</span></h1>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div style="border:2px solid #ccc;padding:12px;">
+            <h2>Client Info</h2>
+            <p style="font-size:13px;">Name: John Doe<br>Email: john@email.com<br>Phone: +1 555-0123<br>Status: <strong
+                style="color:#080;">Active</strong> <span class="btn" style="font-size:11px;padding:2px 8px;"
+                onclick="alert('Access toggled (demo)')">Deactivate</span></p>
+          </div>
+          <div style="border:2px solid #ccc;padding:12px;">
+            <h2>Access Code</h2>
+            <p style="font-size:13px;">
+              Code: <span style="font-weight:bold;">381 592</span><br>
+              Status: <strong style="color:#080;">Active</strong><br>
+              Created: 2 days ago<br>
+              <span class="btn" style="font-size:11px;padding:2px 8px;margin-top:4px;"
+                onclick="alert('Code sent via email (demo)')">Send via Email</span>
+              <span class="btn" style="font-size:11px;padding:2px 8px;"
+                onclick="alert('Code deactivated (demo)')">Deactivate Code</span>
+            </p>
+          </div>
+        </div>
+        <div style="margin-top:16px;border:2px solid #ccc;padding:12px;">
+          <h2>Assigned Galleries <span class="btn" style="font-size:11px;padding:2px 8px;margin-left:8px;">+ Assign
+              Gallery</span></h2>
+          <div class="gallery-item" style="border:none;padding:8px 0;margin:0;">
+            <div class="thumb" style="width:40px;height:40px;">[img]</div>
+            <div class="info">
+              <div class="title" style="font-size:13px;">Wedding — John & Maria</div>
+              <div class="meta" style="font-size:11px;">5 photos authorized of 24</div>
+            </div>
+            <span class="btn" style="font-size:11px;padding:2px 8px;"
+              onclick="go('screen-admin-gallery-detail')">Manage</span>
+          </div>
+        </div>
+        <div style="margin-top:12px;border:2px solid #ccc;padding:12px;">
+          <h2>Download Log <span style="font-size:11px;font-weight:normal;color:#666;">last 5</span></h2>
+          <table class="log-table">
+            <tr>
+              <th>Photo</th>
+              <th>Gallery</th>
+              <th>Date</th>
+              <th>Time</th>
+            </tr>
+            <tr>
+              <td>wedding_01.jpg</td>
+              <td>Wedding</td>
+              <td>06/15/26</td>
+              <td>14:32</td>
+            </tr>
+            <tr>
+              <td>wedding_03.jpg</td>
+              <td>Wedding</td>
+              <td>06/15/26</td>
+              <td>14:33</td>
+            </tr>
+            <tr>
+              <td>wedding_07.jpg</td>
+              <td>Wedding</td>
+              <td>06/15/26</td>
+              <td>14:35</td>
+            </tr>
+            <tr>
+              <td>event_02.jpg</td>
+              <td>La Bodega</td>
+              <td>06/10/26</td>
+              <td>10:12</td>
+            </tr>
+            <tr>
+              <td>event_05.jpg</td>
+              <td>La Bodega</td>
+              <td>06/10/26</td>
+              <td>10:14</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SCREEN 11: ADMIN — GALLERIES LIST ==================== -->
+  <div class="screen" id="screen-admin-galleries">
+    <div class="topbar">
+      <div class="logo">[ADMIN] PHOTO CO.</div>
+      <nav><a onclick="go('screen-landing')">[Logout]</a></nav>
+    </div>
+    <div class="sidebar">
+      <div class="sidebar-nav">
+        <a onclick="go('screen-admin-dashboard')">Dashboard</a>
+        <a onclick="go('screen-admin-clients')">Clients</a>
+        <a class="active" onclick="go('screen-admin-galleries')">Galleries</a>
+        <a onclick="go('screen-admin-quotes')">Quotes</a>
+        <a onclick="go('screen-admin-logs')">Download Logs</a>
+      </div>
+      <div class="sidebar-content">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <h1>Galleries</h1>
+          <span class="btn btn-primary" onclick="go('screen-admin-upload')">+ New Gallery / Upload</span>
+        </div>
+        <div class="gallery-item" onclick="go('screen-admin-gallery-detail')" style="cursor:pointer;margin-top:12px;">
+          <div class="thumb">[img]</div>
+          <div class="info">
+            <div class="title">Wedding — John & Maria</div>
+            <div class="meta">24 photos · Active · Created 2 days ago</div>
+          </div>
+          <span class="btn" style="font-size:11px;padding:2px 8px;">Manage</span>
+        </div>
+        <div class="gallery-item" onclick="go('screen-admin-gallery-detail')" style="cursor:pointer;">
+          <div class="thumb">[img]</div>
+          <div class="info">
+            <div class="title">Event — La Bodega</div>
+            <div class="meta">15 photos · Active · Created 1 week ago</div>
+          </div>
+          <span class="btn" style="font-size:11px;padding:2px 8px;">Manage</span>
+        </div>
+        <div class="gallery-item" onclick="go('screen-admin-gallery-detail')" style="cursor:pointer;">
+          <div class="thumb">[img]</div>
+          <div class="info">
+            <div class="title">Product — Menu Photos</div>
+            <div class="meta">8 photos · Archived · Created 3 weeks ago</div>
+          </div>
+          <span class="btn" style="font-size:11px;padding:2px 8px;">Manage</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SCREEN 12: ADMIN — GALLERY DETAIL ==================== -->
+  <div class="screen" id="screen-admin-gallery-detail">
+    <div class="topbar">
+      <div class="logo">[ADMIN] PHOTO CO.</div>
+      <nav><a onclick="go('screen-landing')">[Logout]</a></nav>
+    </div>
+    <div class="sidebar">
+      <div class="sidebar-nav">
+        <a onclick="go('screen-admin-dashboard')">Dashboard</a>
+        <a onclick="go('screen-admin-clients')">Clients</a>
+        <a class="active" onclick="go('screen-admin-galleries')">← Galleries</a>
+        <a onclick="go('screen-admin-quotes')">Quotes</a>
+        <a onclick="go('screen-admin-logs')">Download Logs</a>
+      </div>
+      <div class="sidebar-content">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <h1>Wedding — John & Maria</h1>
+          <div><span class="btn" onclick="go('screen-admin-upload')">+ Upload</span> <span class="btn"
+              onclick="alert('Gallery archived (demo)')">Archive</span></div>
+        </div>
+        <div style="border:2px solid #ccc;padding:12px;margin:12px 0;">
+          <p style="font-size:13px;">Name: Wedding — John & Maria · Photos: 24 · Status: <strong
+              style="color:#080;">Active</strong> · Created: 2 days ago</p>
+        </div>
+        <div class="perm-toggle">
+          Assign permissions: <select>
+            <option>John Doe</option>
+            <option>Maria Garcia</option>
+          </select>
+          <span class="btn" style="font-size:11px;padding:2px 8px;margin-left:4px;">Apply</span>
+          <span style="font-size:11px;color:#666;margin-left:8px;">✓ = authorized for selected client</span>
+        </div>
+        <div class="gallery-grid">
+          <div class="photo">
+            <div class="badge auth">✓</div><span>[01]</span>
+          </div>
+          <div class="photo"><span>[02]</span></div>
+          <div class="photo">
+            <div class="badge auth">✓</div><span>[03]</span>
+          </div>
+          <div class="photo"><span>[04]</span></div>
+          <div class="photo"><span>[05]</span></div>
+          <div class="photo">
+            <div class="badge auth">✓</div><span>[06]</span>
+          </div>
+          <div class="photo"><span>[07]</span></div>
+          <div class="photo">
+            <div class="badge auth">✓</div><span>[08]</span>
+          </div>
+          <div class="photo"><span>[09]</span></div>
+          <div class="photo">
+            <div class="badge auth">✓</div><span>[10]</span>
+          </div>
+          <div class="photo"><span>[11]</span></div>
+          <div class="photo"><span>[12]</span></div>
+        </div>
+        <div style="font-size:13px;">Pages: ‹ 1 2 ›</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SCREEN 13: ADMIN — UPLOAD ==================== -->
+  <div class="screen" id="screen-admin-upload">
+    <div class="topbar">
+      <div class="logo">[ADMIN] PHOTO CO.</div>
+      <nav><a onclick="go('screen-landing')">[Logout]</a></nav>
+    </div>
+    <div class="sidebar">
+      <div class="sidebar-nav">
+        <a onclick="go('screen-admin-dashboard')">Dashboard</a>
+        <a onclick="go('screen-admin-clients')">Clients</a>
+        <a class="active" onclick="go('screen-admin-galleries')">← Galleries</a>
+        <a onclick="go('screen-admin-quotes')">Quotes</a>
+        <a onclick="go('screen-admin-logs')">Download Logs</a>
+      </div>
+      <div class="sidebar-content">
+        <h1>Upload Photos</h1>
+        <p style="font-size:13px;color:#666;margin-bottom:12px;">Gallery: <strong>Wedding — John & Maria</strong></p>
+        <div class="upload-zone">
+          <p style="font-size:16px;font-weight:bold;">Drop images here</p>
+          <p style="font-size:13px;color:#666;">or</p>
+          <span class="btn btn-primary" onclick="alert('File picker (demo)')">Select Files</span>
+          <p style="font-size:11px;color:#999;margin-top:8px;">Supported: JPG, PNG, HEIC · Originals compressed to
+            ~2-3MB · Previews generated automatically</p>
+        </div>
+        <div style="margin-top:12px;">
+          <div class="upload-item">
+            <span>[img]</span>
+            <span>wedding_01.jpg</span>
+            <div class="progress">
+              <div class="bar" style="width:80%"></div><span class="pct">80%</span>
+            </div>
+            <span style="font-size:11px;color:#666;">4.2MB → 340KB</span>
+          </div>
+          <div class="upload-item">
+            <span>[img]</span>
+            <span>wedding_02.jpg</span>
+            <div class="progress">
+              <div class="bar" style="width:45%"></div><span class="pct">45%</span>
+            </div>
+            <span style="font-size:11px;color:#666;">5.1MB → 280KB</span>
+          </div>
+          <div class="upload-item">
+            <span>[img]</span>
+            <span>wedding_03.jpg</span>
+            <div class="progress">
+              <div class="bar" style="width:10%"></div><span class="pct">10%</span>
+            </div>
+            <span style="font-size:11px;color:#666;">3.8MB → 210KB</span>
+          </div>
+        </div>
+        <p style="font-size:12px;color:#666;margin-top:12px;">Processing: 3 of 24 photos (client-side canvas API)</p>
+        <span class="btn" style="margin-top:8px;" onclick="alert('Upload cancelled (demo)')">Cancel Upload</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SCREEN 14: ADMIN — QUOTE REQUESTS ==================== -->
+  <div class="screen" id="screen-admin-quotes">
+    <div class="topbar">
+      <div class="logo">[ADMIN] PHOTO CO.</div>
+      <nav><a onclick="go('screen-landing')">[Logout]</a></nav>
+    </div>
+    <div class="sidebar">
+      <div class="sidebar-nav">
+        <a onclick="go('screen-admin-dashboard')">Dashboard</a>
+        <a onclick="go('screen-admin-clients')">Clients</a>
+        <a onclick="go('screen-admin-galleries')">Galleries</a>
+        <a class="active" onclick="go('screen-admin-quotes')">Quotes</a>
+        <a onclick="go('screen-admin-logs')">Download Logs</a>
+      </div>
+      <div class="sidebar-content">
+        <h1>Quote Requests</h1>
+        <div class="quote-item">
+          <div class="status new">NEW</div>
+          <strong>Cafe Central</strong><br>
+          <span style="font-size:13px;">Event photos · 2 days ago · Budget: $500-$1k</span><br>
+          <span class="btn" style="font-size:11px;padding:2px 8px;margin-top:4px;"
+            onclick="alert('Viewing quote (demo)')">View</span>
+          <span class="btn" style="font-size:11px;padding:2px 8px;" onclick="alert('Marked as read (demo)')">Mark
+            Read</span>
+          <span class="btn" style="font-size:11px;padding:2px 8px;" onclick="alert('Archived (demo)')">Archive</span>
+        </div>
+        <div class="quote-item">
+          <div class="status read">READ</div>
+          <strong>La Bodega</strong><br>
+          <span style="font-size:13px;">Menu photos · 5 days ago · Budget: &lt;$500</span><br>
+          <span class="btn" style="font-size:11px;padding:2px 8px;margin-top:4px;"
+            onclick="alert('Viewing quote (demo)')">View</span>
+          <span class="btn" style="font-size:11px;padding:2px 8px;" onclick="alert('Archived (demo)')">Archive</span>
+        </div>
+        <div class="quote-item">
+          <div class="status read">READ</div>
+          <strong>Blue Bottle Coffee</strong><br>
+          <span style="font-size:13px;">Interior photos · 2 weeks ago · Budget: $1k-$2k</span><br>
+          <span class="btn" style="font-size:11px;padding:2px 8px;margin-top:4px;"
+            onclick="alert('Viewing quote (demo)')">View</span>
+          <span class="btn" style="font-size:11px;padding:2px 8px;" onclick="alert('Archived (demo)')">Archive</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SCREEN 15: ADMIN — DOWNLOAD LOGS ==================== -->
+  <div class="screen" id="screen-admin-logs">
+    <div class="topbar">
+      <div class="logo">[ADMIN] PHOTO CO.</div>
+      <nav><a onclick="go('screen-landing')">[Logout]</a></nav>
+    </div>
+    <div class="sidebar">
+      <div class="sidebar-nav">
+        <a onclick="go('screen-admin-dashboard')">Dashboard</a>
+        <a onclick="go('screen-admin-clients')">Clients</a>
+        <a onclick="go('screen-admin-galleries')">Galleries</a>
+        <a onclick="go('screen-admin-quotes')">Quotes</a>
+        <a class="active" onclick="go('screen-admin-logs')">Download Logs</a>
+      </div>
+      <div class="sidebar-content">
+        <h1>Download Logs</h1>
+        <table class="log-table">
+          <tr>
+            <th>Photo</th>
+            <th>Gallery</th>
+            <th>Client</th>
+            <th>Date</th>
+            <th>Time</th>
+          </tr>
+          <tr>
+            <td>wedding_01.jpg</td>
+            <td>Wedding — John & Maria</td>
+            <td>Maria G.</td>
+            <td>06/15/26</td>
+            <td>14:32</td>
+          </tr>
+          <tr>
+            <td>wedding_03.jpg</td>
+            <td>Wedding — John & Maria</td>
+            <td>Maria G.</td>
+            <td>06/15/26</td>
+            <td>14:33</td>
+          </tr>
+          <tr>
+            <td>wedding_07.jpg</td>
+            <td>Wedding — John & Maria</td>
+            <td>Maria G.</td>
+            <td>06/15/26</td>
+            <td>14:35</td>
+          </tr>
+          <tr>
+            <td>event_02.jpg</td>
+            <td>Event — La Bodega</td>
+            <td>John D.</td>
+            <td>06/10/26</td>
+            <td>10:12</td>
+          </tr>
+          <tr>
+            <td>event_05.jpg</td>
+            <td>Event — La Bodega</td>
+            <td>John D.</td>
+            <td>06/10/26</td>
+            <td>10:14</td>
+          </tr>
+          <tr>
+            <td>product_01.jpg</td>
+            <td>Product — Menu</td>
+            <td>Maria G.</td>
+            <td>06/08/26</td>
+            <td>16:00</td>
+          </tr>
+          <tr>
+            <td>product_02.jpg</td>
+            <td>Product — Menu</td>
+            <td>Maria G.</td>
+            <td>06/08/26</td>
+            <td>16:01</td>
+          </tr>
+          <tr>
+            <td>product_04.jpg</td>
+            <td>Product — Menu</td>
+            <td>Maria G.</td>
+            <td>06/08/26</td>
+            <td>16:01</td>
+          </tr>
+        </table>
+        <p style="font-size:12px;color:#666;margin-top:8px;">Showing 8 of 156 downloads</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== NAV TOOLBAR ==================== -->
+  <div
+    style="position:fixed;bottom:0;left:0;right:0;background:#333;color:#fff;padding:8px 16px;display:flex;gap:8px;flex-wrap:wrap;font-size:12px;font-family:'Courier New',monospace;z-index:999;">
+    <strong>Screens:</strong>
+    <a onclick="go('screen-landing')" style="color:#fff;cursor:pointer;text-decoration:underline;">Landing</a>
+    <a onclick="go('screen-quote')" style="color:#fff;cursor:pointer;text-decoration:underline;">Quote</a>
+    <a onclick="go('screen-activation')" style="color:#fff;cursor:pointer;text-decoration:underline;">Activation</a>
+    <a onclick="go('screen-client-login')" style="color:#fff;cursor:pointer;text-decoration:underline;">Login</a>
+    <a onclick="go('screen-client-dashboard')" style="color:#fff;cursor:pointer;text-decoration:underline;">Client
+      Dash</a>
+    <a onclick="go('screen-client-gallery')" style="color:#fff;cursor:pointer;text-decoration:underline;">Client
+      Gallery</a>
+    <a onclick="go('screen-client-profile')" style="color:#fff;cursor:pointer;text-decoration:underline;">Client
+      Profile</a>
+    <span style="color:#666;">|</span>
+    <a onclick="go('screen-admin-dashboard')" style="color:#ff0;cursor:pointer;text-decoration:underline;">Admin
+      Dash</a>
+    <a onclick="go('screen-admin-clients')" style="color:#ff0;cursor:pointer;text-decoration:underline;">Clients</a>
+    <a onclick="go('screen-admin-client-detail')" style="color:#ff0;cursor:pointer;text-decoration:underline;">Client
+      Detail</a>
+    <a onclick="go('screen-admin-galleries')" style="color:#ff0;cursor:pointer;text-decoration:underline;">Galleries</a>
+    <a onclick="go('screen-admin-gallery-detail')" style="color:#ff0;cursor:pointer;text-decoration:underline;">Gallery
+      Detail</a>
+    <a onclick="go('screen-admin-upload')" style="color:#ff0;cursor:pointer;text-decoration:underline;">Upload</a>
+    <a onclick="go('screen-admin-quotes')" style="color:#ff0;cursor:pointer;text-decoration:underline;">Quotes</a>
+    <a onclick="go('screen-admin-logs')" style="color:#ff0;cursor:pointer;text-decoration:underline;">Logs</a>
+  </div>
+
+  <script>
+    function go(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      window.scrollTo(0, 0);
+    }
+  </script>
+</body>
+
+</html>
