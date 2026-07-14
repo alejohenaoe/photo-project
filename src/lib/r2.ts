@@ -1,6 +1,10 @@
 const FUNCTIONS_BASE = import.meta.env.VITE_SUPABASE_URL + '/functions/v1'
 
 export async function uploadPhoto(galleryId: string, file: File, preview: Blob): Promise<{ photoId: string }> {
+  const { supabase } = await import('./supabase')
+  const session = await supabase.auth.getSession()
+  const token = session.data.session?.access_token
+
   const form = new FormData()
   form.append('galleryId', galleryId)
   form.append('file', file)
@@ -8,6 +12,7 @@ export async function uploadPhoto(galleryId: string, file: File, preview: Blob):
 
   const res = await fetch(`${FUNCTIONS_BASE}/upload-photo`, {
     method: 'POST',
+    headers: token ? { 'Authorization': `Bearer ${token}` } : {},
     body: form,
   })
   if (!res.ok) {
@@ -18,9 +23,16 @@ export async function uploadPhoto(galleryId: string, file: File, preview: Blob):
 }
 
 export async function getViewUrls(paths: string[], bucket: 'previews' | 'originals' = 'previews'): Promise<string[]> {
+  const { supabase } = await import('./supabase')
+  const session = await supabase.auth.getSession()
+  const token = session.data.session?.access_token
+
   const res = await fetch(`${FUNCTIONS_BASE}/get-view-urls`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+    },
     body: JSON.stringify({ paths, bucket }),
   })
   if (!res.ok) {

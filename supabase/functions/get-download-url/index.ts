@@ -130,35 +130,63 @@ async function handler(req: Request): Promise<Response> {
       })
     }
 
-    const { data: permission } = await supabase
-      .from('photo_permissions')
-      .select('id')
-      .eq('photo_id', photoId)
-      .eq('client_id', clientId)
-      .eq('is_active', true)
-      .maybeSingle()
-
-    if (!permission) {
-      return new Response(JSON.stringify({ error: 'You do not have permission to download this photo' }), {
-        status: 403,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      })
-    }
-
-    const { data: photo } = await supabase
+    // Get photo + gallery to check permissions
+    const { data: photo, error: photoError } = await supabase
       .from('photos')
-      .select('storage_path, filename')
+      .select('id, storage_path, filename, gallery_id')
       .eq('id', photoId)
+      .is('deleted_at', null)
       .single()
 
-    if (!photo) {
+    if (photoError || !photo) {
       return new Response(JSON.stringify({ error: 'Photo not found' }), {
         status: 404,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       })
     }
 
+    // Check the gallery belongs to this client and has download capacity
+    const { data: gallery, error: galleryError } = await supabase
+      .from('galleries')
+      .select('client_id, download_limit, download_count')
+      .eq('id', photo.gallery_id)
+      .single()
+
+    if (galleryError || !gallery) {
+      return new Response(JSON.stringify({ error: 'Gallery not found' }), {
+        status: 404,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      })
+    }
+
+    if (gallery.client_id !== clientId) {
+      return new Response(JSON.stringify({ error: 'This gallery is not assigned to you' }), {
+        status: 403,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      })
+    }
+
+    if (gallery.download_limit > 0 && gallery.download_count >= gallery.download_limit) {
+      return new Response(JSON.stringify({ error: 'Download limit reached for this gallery' }), {
+        status: 403,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      })
+    }
+
     const signedUrl = await generatePresignedGetUrl(photo.storage_path)
+
+    // Increment download count and log
+    const { error: updateError } = await supabase
+      .from('galleries')
+      .update({ download_count: gallery.download_count + 1 })
+      .eq('id', photo.gallery_id)
+
+    if (updateError) {
+      return new Response(JSON.stringify({ error: updateError.message }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      })
+    }
 
     await supabase.from('download_logs').insert({
       photo_id: photoId,

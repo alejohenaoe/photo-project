@@ -80,55 +80,65 @@ export default function GalleryUpload() {
   const errorCount = items.filter((i) => i.status === 'error').length
 
   return (
-    <div>
+    <div className="animate-fade-in">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">Subir Fotos</h1>
+        <h1 className="text-2xl font-bold text-text-primary">Subir Fotos</h1>
         <button
           onClick={() => navigate(`/admin/galleries/${galleryId}`)}
-          className="text-sm text-gray-600 hover:underline"
+          className="text-sm text-text-muted hover:text-gold-600 transition-colors"
         >
-          Volver a la galería
+          ← Volver a la galería
         </button>
       </div>
 
-      <div className="mb-6">
+      {/* Drop zone */}
+      <div
+        className="border-2 border-dashed border-border-medium rounded-xl p-10 sm:p-16 text-center mb-6 hover:border-gold-500/50 transition-colors bg-bg-elevated/50 cursor-pointer"
+        onClick={() => inputRef.current?.click()}
+      >
+        <p className="text-lg font-display text-text-primary mb-2">Arrastra tus imágenes aquí</p>
+        <p className="text-sm text-text-muted mb-5">o</p>
+        <span className="bg-gold-500 text-dark-900 px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gold-400 transition-all inline-block">
+          Seleccionar Archivos
+        </span>
+        <p className="text-xs text-text-muted mt-4">JPG, PNG, HEIC · Las previews se generan automáticamente</p>
         <input
           ref={inputRef}
           type="file"
           accept="image/*"
           multiple
           onChange={(e) => handleFiles(e.target.files)}
-          className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:bg-gray-900 file:text-white hover:file:bg-gray-800"
+          className="hidden"
         />
       </div>
 
       {items.length > 0 && (
         <>
-          <div className="flex gap-3 mb-4 text-sm text-gray-600">
-            <span>{items.length} seleccionados</span>
-            <span>{doneCount} subidos</span>
-            <span>{errorCount} fallidos</span>
+          <div className="flex flex-wrap gap-3 mb-4 text-sm">
+            <span className="text-text-secondary"><strong className="text-text-primary">{items.length}</strong> seleccionados</span>
+            <span className="text-text-secondary"><strong className="text-success">{doneCount}</strong> subidos</span>
+            <span className="text-text-secondary"><strong className="text-error">{errorCount}</strong> fallidos</span>
           </div>
 
-          <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-3 mb-6">
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3 mb-6">
             {items.map((item, i) => (
               <div key={i} className="relative group">
                 <img
                   src={item.preview}
                   alt={item.file.name}
-                  className="w-full aspect-square object-cover rounded border"
+                  className="w-full aspect-square object-cover rounded-lg border border-border-light bg-bg-elevated"
                 />
                 <div className="absolute inset-0 flex items-center justify-center">
                   {item.status === 'uploading' && (
-                    <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    <div className="w-7 h-7 border-2 border-gold-500 border-t-transparent rounded-full animate-spin" />
                   )}
                   {item.status === 'done' && (
-                    <div className="w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center text-xs font-bold">
+                    <div className="w-7 h-7 bg-success/80 text-white rounded-full flex items-center justify-center text-xs font-bold shadow-lg">
                       &#10003;
                     </div>
                   )}
                   {item.status === 'error' && (
-                    <div className="w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs font-bold">
+                    <div className="w-7 h-7 bg-error/80 text-white rounded-full flex items-center justify-center text-xs font-bold shadow-lg">
                       !
                     </div>
                   )}
@@ -136,13 +146,13 @@ export default function GalleryUpload() {
                 {item.status === 'pending' && (
                   <button
                     onClick={() => removeItem(i)}
-                    className="absolute top-1 right-1 w-5 h-5 bg-red-600 text-white rounded-full text-xs opacity-0 group-hover:opacity-100 flex items-center justify-center"
+                    className="absolute top-1.5 right-1.5 w-6 h-6 bg-error/80 text-white rounded-full text-xs opacity-0 group-hover:opacity-100 flex items-center justify-center hover:bg-error transition-all"
                   >
                     &times;
                   </button>
                 )}
                 {item.status === 'error' && (
-                  <div className="absolute -bottom-6 left-0 right-0 text-xs text-red-600 truncate">
+                  <div className="absolute -bottom-6 left-0 right-0 text-xs text-error truncate">
                     {item.error}
                   </div>
                 )}
@@ -155,7 +165,7 @@ export default function GalleryUpload() {
               <button
                 onClick={startUpload}
                 disabled={activeUploads > 0}
-                className="bg-gray-900 text-white px-6 py-2 rounded text-sm hover:bg-gray-800 disabled:opacity-50"
+                className="bg-gold-500 text-dark-900 px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gold-400 transition-all hover:shadow-lg hover:shadow-gold-500/20 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98]"
               >
                 {activeUploads > 0 ? 'Subiendo...' : `Subir ${pendingCount} fotos`}
               </button>
@@ -166,9 +176,9 @@ export default function GalleryUpload() {
                   setItems([])
                   navigate(`/admin/galleries/${galleryId}`)
                 }}
-                className="text-sm text-gray-600 hover:underline"
+                className="text-sm text-text-muted hover:text-gold-600 transition-colors"
               >
-                Listo
+                Listo →
               </button>
             )}
           </div>

@@ -1,12 +1,12 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import {
   fetchGalleries, fetchGallery, createGallery, updateGallery, archiveGallery,
-  fetchPhotos, deletePhoto, fetchClients, authorizeDownload,
-  fetchClientGalleries, fetchClientPhotos, fetchGalleryPermissions,
+  fetchPhotos, deletePhoto, fetchClients,
+  fetchClientGalleries, fetchClientPhotos,
   updateClient, activateClient, generateAccessCode, sendAccessEmail,
-  fetchClientAccessCodes, fetchClientGalleriesWithPermissions, fetchClientDownloadLogs,
+  fetchClientAccessCodes, fetchClientDownloadLogs,
   type Gallery, type Photo, type Client, type AccessCode,
-  type ClientGalleryPermission, type DownloadLogEntry,
+  type DownloadLogEntry,
 } from '../lib/api'
 
 export function useGalleries() {
@@ -27,7 +27,8 @@ export function useGallery(id: string) {
 export function useCreateGallery() {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: ({ name, description }: { name: string; description?: string }) => createGallery(name, description),
+    mutationFn: ({ name, description, clientId, downloadLimit }: { name: string; description?: string; clientId?: string | null; downloadLimit?: number }) =>
+      createGallery(name, description, clientId, downloadLimit),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['galleries'] }),
   })
 }
@@ -35,7 +36,8 @@ export function useCreateGallery() {
 export function useUpdateGallery() {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: ({ id, ...updates }: { id: string; name?: string; description?: string | null }) => updateGallery(id, updates),
+    mutationFn: ({ id, ...updates }: { id: string; name?: string; description?: string | null; client_id?: string | null; download_limit?: number }) =>
+      updateGallery(id, updates),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['galleries'] })
       qc.invalidateQueries({ queryKey: ['gallery'] })
@@ -71,25 +73,6 @@ export function useClients() {
   return useQuery<Client[]>({
     queryKey: ['clients'],
     queryFn: fetchClients,
-  })
-}
-
-export function useAuthorizeDownload() {
-  const qc = useQueryClient()
-  return useMutation({
-    mutationFn: ({ photoIds, clientId, action }: { photoIds: string[]; clientId: string; action: 'grant' | 'revoke' }) =>
-      authorizeDownload(photoIds, clientId, action),
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ['permissions'] })
-    },
-  })
-}
-
-export function useGalleryPermissions(clientId: string, galleryId: string) {
-  return useQuery<Set<string>>({
-    queryKey: ['permissions', clientId, galleryId],
-    queryFn: () => fetchGalleryPermissions(clientId, galleryId),
-    enabled: !!clientId && !!galleryId,
   })
 }
 
@@ -150,36 +133,10 @@ export function useClientAccessCodes(clientId: string) {
   })
 }
 
-export function useClientGalleriesWithPermissions(clientId: string) {
-  return useQuery<ClientGalleryPermission[]>({
-    queryKey: ['client-gallery-permissions', clientId],
-    queryFn: () => fetchClientGalleriesWithPermissions(clientId),
-    enabled: !!clientId,
-  })
-}
-
 export function useClientDownloadLogs(clientId: string) {
   return useQuery<DownloadLogEntry[]>({
     queryKey: ['download-logs', clientId],
     queryFn: () => fetchClientDownloadLogs(clientId),
     enabled: !!clientId,
-  })
-}
-
-export function useClientsWithPermissions(galleryId: string) {
-  const { data: clients } = useClients()
-  return useQuery({
-    queryKey: ['clients-permissions', galleryId],
-    queryFn: async () => {
-      if (!clients) return []
-      const result = await Promise.all(
-        clients.map(async (c) => ({
-          client: c,
-          permissions: c.id ? await fetchGalleryPermissions(c.id, galleryId) : new Set<string>(),
-        })),
-      )
-      return result
-    },
-    enabled: !!clients && !!galleryId,
   })
 }

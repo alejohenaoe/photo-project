@@ -17,10 +17,16 @@ jobs:
 
       - name: Deploy all edge functions
         run: |
+          PUBLIC_FN="validate-code validate-and-activate"
           for fn in supabase/functions/*/; do
             slug=$(basename "$fn")
-            echo "Deploying $slug..."
-            supabase functions deploy "$slug" --project-ref "${{ vars.SUPABASE_PROJECT_REF }}" --use-api
+            if echo "$PUBLIC_FN" | grep -qw "$slug"; then
+              echo "Deploying $slug (public)..."
+              supabase functions deploy "$slug" --project-ref "${{ vars.SUPABASE_PROJECT_REF }}" --use-api --no-verify-jwt
+            else
+              echo "Deploying $slug..."
+              supabase functions deploy "$slug" --project-ref "${{ vars.SUPABASE_PROJECT_REF }}" --use-api
+            fi
           done
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}

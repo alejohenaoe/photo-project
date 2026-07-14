@@ -1,0 +1,8 @@
+[functions.validate-code]
+verify_jwt = false
+
+[functions.validate-and-activate]
+verify_jwt = false
+
+[functions.send-contact-email]
+verify_jwt = false

@@ -12,11 +12,11 @@ import QuoteRequest from '../pages/public/QuoteRequest'
 import Login from '../pages/Login'
 import Activation from '../pages/Activation'
 import AdminDashboard from '../pages/admin/Dashboard'
+import Contacts from '../pages/admin/Contacts'
 import GalleryList from '../pages/admin/galleries/List'
 import GalleryForm from '../pages/admin/galleries/Form'
 import GalleryDetail from '../pages/admin/galleries/Detail'
 import GalleryUpload from '../pages/admin/galleries/Upload'
-import GalleryPermissions from '../pages/admin/galleries/Permissions'
 import ClientList from '../pages/admin/clients/List'
 import ClientDetail from '../pages/admin/clients/Detail'
 import ClientForm from '../pages/admin/clients/Form'
@@ -43,12 +43,12 @@ export default function AppRoutes() {
       <Route element={<AuthGuard expectedRole="photographer" />}>
         <Route element={<AdminLayout />}>
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/contacts" element={<Contacts />} />
           <Route path="/admin/galleries" element={<GalleryList />} />
           <Route path="/admin/galleries/new" element={<GalleryForm />} />
           <Route path="/admin/galleries/:id/edit" element={<GalleryForm />} />
           <Route path="/admin/galleries/:id" element={<GalleryDetail />} />
           <Route path="/admin/galleries/:id/upload" element={<GalleryUpload />} />
-          <Route path="/admin/galleries/:id/permissions" element={<GalleryPermissions />} />
           <Route path="/admin/clients" element={<ClientList />} />
           <Route path="/admin/clients/new" element={<ClientForm />} />
           <Route path="/admin/clients/:id" element={<ClientDetail />} />

@@ -9,7 +9,7 @@ async function handler(req: Request): Promise<Response> {
 
   try {
     const resendApiKey = Deno.env.get('RESEND_API_KEY')
-    const fromEmail = Deno.env.get('RESEND_FROM_EMAIL') || 'Photo Co. <onboarding@resend.dev>'
+    const fromEmail = Deno.env.get('RESEND_FROM_EMAIL') || 'NEFTIK PHOTO <onboarding@resend.dev>'
     const { email, code, clientName } = await req.json()
 
     if (!email || !code) {
@@ -28,13 +28,13 @@ async function handler(req: Request): Promise<Response> {
       body: JSON.stringify({
         from: fromEmail,
         to: [email],
-        subject: 'Your access code',
-        html: `
-          <h2>Welcome${clientName ? `, ${clientName}` : ''}!</h2>
-          <p>Your access code to view and download your photos is:</p>
+      subject: 'Tu código de acceso',
+      html: `
+          <h2>¡Bienvenido${clientName ? `, ${clientName}` : ''}!</h2>
+          <p>Tu código de acceso para ver y descargar tus fotos es:</p>
           <h1 style="letter-spacing: 8px; font-size: 32px;">${code}</h1>
-          <p>Enter this code at our client portal to activate your account.</p>
-          <p>This code will expire after 7 days.</p>
+          <p>Ingresa este código en nuestro portal de clientes para activar tu cuenta.</p>
+          <p>Este código expira en 7 días.</p>
         `,
       }),
     })
