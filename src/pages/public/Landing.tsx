@@ -6,9 +6,9 @@ const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL.replace(/\/rest\/v1.*$/, 
 const FUNCTIONS_URL = `${SUPABASE_URL}/functions/v1`
 
 const heroImages = [
-  '/imagenes/pexels-jonathanborba-29068731.jpg',
-  '/imagenes/pexels-allanglezg-31843934.jpg',
-  '/imagenes/pexels-anat-landa-2162599192-38446237.jpg',
+  '/imagenes/pexels-jonathanborba-29068731.webp',
+  '/imagenes/pexels-allanglezg-31843934.webp',
+  '/imagenes/pexels-anat-landa-2162599192-38446237.webp',
 ]
 
 const rotatingPhrases = [
