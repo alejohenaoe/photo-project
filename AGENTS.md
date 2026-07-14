@@ -13,6 +13,11 @@
 ### Regla de oro
 **NUNCA se hace commit, push o deploy sin autorización explícita del usuario.** Esto aplica tanto para push a `main` (Vercel) como para despliegues a Supabase (functions y DB). Bajo ninguna circunstancia se asume permiso.
 
+### Flujo de commit y push
+1. **Antes de commitear**: hacer `git pull origin main` para verificar que la rama esté al día.
+2. Hacer commit y push a la rama feature.
+3. **Después de commitear y pushear**: volver a `main` con `git checkout main`.
+
 ## Comandos principales
 
 | Comando | Descripción |
