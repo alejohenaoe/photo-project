@@ -45,55 +45,57 @@ export default function ClientForm() {
   }
 
   return (
-    <div className="max-w-lg">
-      <h1 className="text-2xl font-bold mb-6">{isEditing ? 'Editar Cliente' : 'Nuevo Cliente'}</h1>
-      {error && <p className="text-red-600 text-sm mb-4">{error}</p>}
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium mb-1">Nombre</label>
-          <input
-            value={name}
-            onChange={e => setName(e.target.value)}
-            className="w-full border rounded px-3 py-2 text-sm"
-            required
-            autoFocus
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium mb-1">Correo</label>
-          <input
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            className="w-full border rounded px-3 py-2 text-sm"
-            required
-            type="email"
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium mb-1">Teléfono</label>
-          <input
-            value={phone}
-            onChange={e => setPhone(e.target.value)}
-            className="w-full border rounded px-3 py-2 text-sm"
-          />
-        </div>
-        <div className="flex gap-3">
-          <button
-            type="submit"
-            disabled={saving}
-            className="bg-gray-900 text-white px-4 py-2 rounded text-sm hover:bg-gray-800 disabled:opacity-50"
-          >
-            {saving ? 'Guardando...' : isEditing ? 'Actualizar' : 'Crear'}
-          </button>
-          <button
-            type="button"
-            onClick={() => navigate('/admin/clients')}
-            className="text-sm text-gray-600 hover:underline"
-          >
-            Cancelar
-          </button>
-        </div>
-      </form>
+    <div className="max-w-lg animate-fade-in">
+      <div className="bg-surface border border-border-light rounded-xl p-6">
+        <h1 className="text-xl font-bold text-text-primary mb-6">{isEditing ? 'Editar Cliente' : 'Nuevo Cliente'}</h1>
+        {error && <p className="text-error text-sm mb-4">{error}</p>}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm text-text-secondary font-medium mb-1.5">Nombre</label>
+            <input
+              value={name}
+              onChange={e => setName(e.target.value)}
+              className="w-full bg-bg-base border border-border-light rounded-lg px-4 py-2.5 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500/30 transition-all"
+              required
+              autoFocus
+            />
+          </div>
+          <div>
+            <label className="block text-sm text-text-secondary font-medium mb-1.5">Correo</label>
+            <input
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              className="w-full bg-bg-base border border-border-light rounded-lg px-4 py-2.5 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500/30 transition-all"
+              required
+              type="email"
+            />
+          </div>
+          <div>
+            <label className="block text-sm text-text-secondary font-medium mb-1.5">Teléfono</label>
+            <input
+              value={phone}
+              onChange={e => setPhone(e.target.value)}
+              className="w-full bg-bg-base border border-border-light rounded-lg px-4 py-2.5 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500/30 transition-all"
+            />
+          </div>
+          <div className="flex gap-3 pt-2">
+            <button
+              type="submit"
+              disabled={saving}
+              className="bg-gold-500 text-dark-900 px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-gold-400 transition-all hover:shadow-lg hover:shadow-gold-500/20 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98]"
+            >
+              {saving ? 'Guardando...' : isEditing ? 'Actualizar' : 'Crear'}
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate('/admin/clients')}
+              className="text-sm text-text-muted hover:text-text-secondary transition-colors"
+            >
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   )
 }
